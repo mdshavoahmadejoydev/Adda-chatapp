@@ -6,7 +6,15 @@ import Button from '@mui/material/Button';
 
 import { styled } from '@mui/material/styles';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+
+// react tostify;
+import { ToastContainer, toast } from 'react-toastify';
+// react tostify;
+
+// firebase auth code:
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+// firebase auth code:
 
 const BootstrapButton = styled(Button)({
   background: '#5F35F5',
@@ -36,6 +44,12 @@ const CssTextFieldtwothree = styled(TextField)({
 });
 
 const Registration = () => {
+
+  // firebase auth code:
+  const auth = getAuth();
+  // firebase auth code:
+
+  const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
@@ -96,38 +110,111 @@ const Registration = () => {
     }
 
     if (email && emailregex.test(email) && name && password && lowercase_letter.test(password) && uppercase_letter.test(password) && digit.test(password) && special_character.test(password) && length_character.test(password)) {
-      console.log("Create Account")
+
+      // firebase auth code:
+      createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+
+          toast.success('registration successfully')
+
+          setTimeout(() => {
+            navigate("/login")
+          }, 2000);
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          console.log(errorCode);
+          if(errorCode.includes("auth/email-already-in-use")) {
+            setEmailError("Email has already use")
+          }
+ 
+        });
+      // firebase auth code:
     }
   }
 
 
   return (
     <Grid container>
+      {/* react tostify; */}
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
+      {/* react tostify; */}
       <Grid size={6}>
-        <div className='flex justify-end items-center h-full'>
-          <div className='w-[560px]'>
-            <h2 className='text-34 text-primary font-bold font-nonito'>Get started with easily register</h2>
-            <p className='text-lg text-black/50 font-normal font-nonito pt-3'>Free register and you can enjoy it</p>
-            <CssTextField id="outlined-basic" label="Email Address" variant="outlined" onChange={handleEmail}/>
-            {emailerror &&
-              <p className='bg-red-500 text-white rounded py-2 px-3 w-[70%] mt-2'>{emailerror}</p>
-            }
-            
-            <CssTextFieldtwothree id="outlined-basic" label="Full Name" variant="outlined" onChange={handleFullName}/>
-            {nameerror &&
-              <p className='bg-red-500 text-white rounded py-2 px-3 w-[70%] mt-2'>{nameerror}</p>
-            }
-            <CssTextFieldtwothree id="outlined-basic" label="Password" variant="outlined" onChange={handlePassword}/>
-            {passworderror &&
-              <p className='bg-red-500 text-white rounded py-2 px-3 w-[70%] mt-2'>{passworderror}</p>
-            }
-            <BootstrapButton className='hover:shadow-none!' variant="contained" onClick={handleSignUp}>Sign up</BootstrapButton>
-            <p className='ml-[90px]'>Already  have an account ? <Link to="/login" ><span className='text-[#EA6C00] font-semibold'>Log In</span></Link></p>
+        <div className="flex justify-end items-center h-full">
+          <div className="w-[560px]">
+            <h2 className="text-34 text-primary font-bold font-nonito">
+              Get started with easily register
+            </h2>
+            <p className="text-lg text-black/50 font-normal font-nonito pt-3">
+              Free register and you can enjoy it
+            </p>
+            <CssTextField
+              id="outlined-basic"
+              label="Email Address"
+              variant="outlined"
+              onChange={handleEmail}
+            />
+            {emailerror && (
+              <p className="bg-red-500 text-white rounded py-2 px-3 w-[70%] mt-2">
+                {emailerror}
+              </p>
+            )}
+
+            <CssTextFieldtwothree
+              id="outlined-basic"
+              label="Full Name"
+              variant="outlined"
+              onChange={handleFullName}
+            />
+            {nameerror && (
+              <p className="bg-red-500 text-white rounded py-2 px-3 w-[70%] mt-2">
+                {nameerror}
+              </p>
+            )}
+            <CssTextFieldtwothree
+              id="outlined-basic"
+              label="Password"
+              variant="outlined"
+              onChange={handlePassword}
+            />
+            {passworderror && (
+              <p className="bg-red-500 text-white rounded py-2 px-3 w-[70%] mt-2">
+                {passworderror}
+              </p>
+            )}
+            <BootstrapButton
+              className="hover:shadow-none!"
+              variant="contained"
+              onClick={handleSignUp}
+            >
+              Sign up
+            </BootstrapButton>
+            <p className="ml-[90px]">
+              Already have an account ?{" "}
+              <Link to="/login">
+                <span className="text-[#EA6C00] font-semibold">Log In</span>
+              </Link>
+            </p>
           </div>
-        </div>       
+        </div>
       </Grid>
       <Grid size={6}>
-        <Image classname={`w-full h-screen object-cover`} src={regImage} alt={`reg img`} />
+        <Image
+          classname={`w-full h-screen object-cover`}
+          src={regImage}
+          alt={`reg img`}
+        />
       </Grid>
     </Grid>
   );

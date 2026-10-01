@@ -8,7 +8,15 @@ import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 import { useState } from 'react';
 import { FcGoogle } from "react-icons/fc";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
+// firebase auth code:
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+// firebase auth code:
+
+// react tostify;
+import { ToastContainer, toast } from 'react-toastify';
+// react tostify;
 
 const BootstrapButton = styled(Button)({
   background: '#5F35F5',
@@ -38,6 +46,14 @@ const CssTextFieldtwothree = styled(TextField)({
 });
 
 const Login = () => {
+
+  // firebase auth code:
+  const auth = getAuth();
+  // firebase auth code:
+
+  const navigate = useNavigate();
+
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -92,21 +108,56 @@ const Login = () => {
       special_character.test(password) &&
       length_character.test(password)
     ) {
-      console.log("Create Account");
+      
+        signInWithEmailAndPassword(auth, email, password)
+          .then((userCredential) => {
+            toast("login successfully")
+
+            setInterval(() => {
+              navigate("/home")
+            }, 2000);
+            
+          })
+          .catch((error) => {
+            const errorCode = error.code;
+            console.log(errorCode)
+            if (errorCode.includes("auth/invalid-credential")) {
+              toast.error("invalid username or password")
+            } else if (errorCode.includes("auth/too-many-requests")) {
+              toast.error("try letter....")
+            }
+          });
+
     }
   };
 
   return (
     <Grid container>
       <Grid size={6}>
+        {/* react tostify; */}
+        <ToastContainer
+          position="top-center"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick={false}
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="dark"
+        />
+        {/* react tostify; */}
         <div className="flex justify-end items-center h-full">
           <div className="w-[560px]">
             <h2 className="text-34 text-primary font-bold font-nonito">
               Login to your account!
             </h2>
             <div className="flex gap-2 items-center py-[15px] px-[29px] w-[220px] border border-seagreen/30 rounded-2xl  mt-[30px] cursor-pointer">
-              <FcGoogle className="text-2xl"/> 
-              <p className="font-Opensans font-semibold text-sm">Login with Google</p>
+              <FcGoogle className="text-2xl" />
+              <p className="font-Opensans font-semibold text-sm">
+                Login with Google
+              </p>
             </div>
             <CssTextField
               id="outlined-basic"
@@ -140,7 +191,9 @@ const Login = () => {
             </BootstrapButton>
             <p className="ml-[90px]">
               Don’t have an account ?{" "}
-              <Link to="/"><span className="text-[#EA6C00] font-semibold">Sign up</span></Link>
+              <Link to="/">
+                <span className="text-[#EA6C00] font-semibold">Sign up</span>
+              </Link>
             </p>
           </div>
         </div>
