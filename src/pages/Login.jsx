@@ -60,6 +60,8 @@ const Login = () => {
   const [emailerror, setEmailError] = useState("");
   const [passworderror, setPasswordError] = useState("");
 
+  const [loader, setLoader] = useState(false)
+
   let emailregex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   // let passwordregex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@.#$!%*?&])[A-Za-z\d@.#$!%*?&]{8,15}$/;
   let lowercase_letter = /^(?=.*[a-z])/;
@@ -108,7 +110,7 @@ const Login = () => {
       special_character.test(password) &&
       length_character.test(password)
     ) {
-      
+      // firebase auth code:
         signInWithEmailAndPassword(auth, email, password)
           .then((userCredential) => {
             toast("login successfully")
@@ -126,6 +128,7 @@ const Login = () => {
             } else if (errorCode.includes("auth/too-many-requests")) {
               toast.error("try letter....")
             }
+
           });
 
     }
@@ -182,13 +185,30 @@ const Login = () => {
                 {passworderror}
               </p>
             )}
-            <BootstrapButton
-              className="hover:shadow-none!"
-              variant="contained"
-              onClick={handleSignUp}
-            >
-              Log in
-            </BootstrapButton>
+            {loader ? (
+              <div className="ml-[144px]">
+                <LineWave
+                  visible={true}
+                  height="150"
+                  width="150"
+                  color="#4fa94d"
+                  ariaLabel="line-wave-loading"
+                  wrapperStyle={{}}
+                  wrapperClass=""
+                  firstLineColor=""
+                  middleLineColor=""
+                  lastLineColor=""
+                />
+              </div>
+            ) : (
+              <BootstrapButton
+                className="hover:shadow-none!"
+                variant="contained"
+                onClick={handleSignUp}
+              >
+                Log In
+              </BootstrapButton>
+            )}
             <p className="ml-[90px]">
               Don’t have an account ?{" "}
               <Link to="/">

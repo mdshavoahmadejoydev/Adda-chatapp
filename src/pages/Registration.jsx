@@ -16,6 +16,10 @@ import { ToastContainer, toast } from 'react-toastify';
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 // firebase auth code:
 
+// react loader
+import { Audio, LineWave } from 'react-loader-spinner'
+// react loader
+
 const BootstrapButton = styled(Button)({
   background: '#5F35F5',
   border: '1px solid',
@@ -58,6 +62,8 @@ const Registration = () => {
   const [emailerror, setEmailError] = useState("");
   const [nameerror, setNameerror] = useState("");
   const [passworderror, setPasswordError] = useState("");
+
+  const [loader, setLoader] = useState(false)
 
   let emailregex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   // let passwordregex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@.#$!%*?&])[A-Za-z\d@.#$!%*?&]{8,15}$/;
@@ -110,11 +116,12 @@ const Registration = () => {
     }
 
     if (email && emailregex.test(email) && name && password && lowercase_letter.test(password) && uppercase_letter.test(password) && digit.test(password) && special_character.test(password) && length_character.test(password)) {
-
+      setLoader(true);
       // firebase auth code:
       createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
 
+          setLoader(false)
           toast.success('registration successfully')
 
           setTimeout(() => {
@@ -127,6 +134,7 @@ const Registration = () => {
           if(errorCode.includes("auth/email-already-in-use")) {
             setEmailError("Email has already use")
           }
+          setLoader(false)
  
         });
       // firebase auth code:
@@ -193,13 +201,32 @@ const Registration = () => {
                 {passworderror}
               </p>
             )}
-            <BootstrapButton
-              className="hover:shadow-none!"
-              variant="contained"
-              onClick={handleSignUp}
-            >
-              Sign up
-            </BootstrapButton>
+
+            {loader ? (
+              <div className="ml-[144px]">
+                <LineWave
+                  visible={true}
+                  height="150"
+                  width="150"
+                  color="#4fa94d"
+                  ariaLabel="line-wave-loading"
+                  wrapperStyle={{}}
+                  wrapperClass=""
+                  firstLineColor=""
+                  middleLineColor=""
+                  lastLineColor=""
+                />
+              </div>
+            ) : (
+              <BootstrapButton
+                className="hover:shadow-none!"
+                variant="contained"
+                onClick={handleSignUp}
+              >
+                Sign up
+              </BootstrapButton>
+            )}
+
             <p className="ml-[90px]">
               Already have an account ?{" "}
               <Link to="/login">
