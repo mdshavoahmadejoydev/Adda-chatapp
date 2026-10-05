@@ -11,12 +11,16 @@ import { FcGoogle } from "react-icons/fc";
 import { Link, useNavigate } from "react-router-dom";
 
 // firebase auth code:
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, sendPasswordResetEmail  } from "firebase/auth";
 // firebase auth code:
 
 // react tostify;
 import { ToastContainer, toast } from 'react-toastify';
 // react tostify;
+
+// react loader
+import { Audio, LineWave } from 'react-loader-spinner'
+// react loader
 
 const BootstrapButton = styled(Button)({
   background: '#5F35F5',
@@ -58,9 +62,18 @@ const Login = () => {
   const [password, setPassword] = useState("");
 
   const [emailerror, setEmailError] = useState("");
+
+  const [resetemailerror, setResetEmailError] = useState("");
+
+  
   const [passworderror, setPasswordError] = useState("");
 
+
+
   const [loader, setLoader] = useState(false)
+  
+  const [resetEmail, setResetEmail] = useState(false)
+  const[popup, setPopup] = useState(false)
 
   let emailregex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   // let passwordregex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@.#$!%*?&])[A-Za-z\d@.#$!%*?&]{8,15}$/;
@@ -71,6 +84,10 @@ const Login = () => {
   let length_character = /[A-Za-z\d@$!%*?&]{8,}$/;
 
   let handleEmail = (e) => {
+    setEmail(e.target.value);
+    setEmailError("");
+  };
+  let handleEmailReset = (e) => {
     setEmail(e.target.value);
     setEmailError("");
   };
@@ -110,14 +127,22 @@ const Login = () => {
       special_character.test(password) &&
       length_character.test(password)
     ) {
+      setLoader(true);
       // firebase auth code:
         signInWithEmailAndPassword(auth, email, password)
           .then((userCredential) => {
-            toast("login successfully")
+            if(userCredential.user.emailVerified) {
+              toast.success("login successfully")
+  
+              setInterval(() => {
+                navigate("/home")
+              }, 2000);
+            } else {
+              toast.error("Check your Email and verify")
+            }
 
-            setInterval(() => {
-              navigate("/home")
-            }, 2000);
+            setLoader(false);
+            
             
           })
           .catch((error) => {
@@ -128,12 +153,47 @@ const Login = () => {
             } else if (errorCode.includes("auth/too-many-requests")) {
               toast.error("try letter....")
             }
+            setLoader(false);
 
           });
 
     }
   };
 
+  let submitResetEmail = () => {
+    if (resetEmail) {
+      if (!emailregex.test(resetEmail)) {
+        setResetEmailError("Enter Your Verified Email");
+      } else {
+        console.log("clicked");
+        sendPasswordResetEmail(auth, resetEmail)
+          .then(() => {
+            toast.info("Check Yout Email for Reset");
+          })
+          .catch((error) => {
+            const errorCode = error.code;
+          });
+        console.log("clicked");
+        setTimeout(() => {
+          setPopup(false);
+        }, 200);
+      }
+    } else {
+      setResetEmailError("Enter Your Verified Email");
+    }
+  };
+
+  let handleGoogle =() =>{
+    const provider = new GoogleAuthProvider();
+
+    signInWithPopup(auth, provider)
+      .then((result) => {
+          navigate("/home");
+      })
+      .catch((error) => {
+        const errorcode = error.code
+      });
+  }
   return (
     <Grid container>
       <Grid size={6}>
@@ -156,7 +216,10 @@ const Login = () => {
             <h2 className="text-34 text-primary font-bold font-nonito">
               Login to your account!
             </h2>
-            <div className="flex gap-2 items-center py-[15px] px-[29px] w-[220px] border border-seagreen/30 rounded-2xl  mt-[30px] cursor-pointer">
+            <div
+              onClick={handleGoogle}
+              className="flex gap-2 items-center py-[15px] px-[29px] w-[220px] border border-seagreen/30 rounded-2xl  mt-[30px] cursor-pointer"
+            >
               <FcGoogle className="text-2xl" />
               <p className="font-Opensans font-semibold text-sm">
                 Login with Google
@@ -185,6 +248,59 @@ const Login = () => {
                 {passworderror}
               </p>
             )}
+
+            <p
+              className="text-sm text-red-700 font-medium mt-4 cursor-pointer"
+              onClick={() => setPopup(true)}
+            >
+              Forget Password
+            </p>
+
+            {/* forget part */}
+            {popup && (
+              <div className="absolute top-0 left-0 w-full h-screen bg-black/70 z-20 flex justify-center items-center">
+                <div className="h-[400px] w-[600px] bg-white rounded-2xl flex flex-col justify-center items-center">
+                  <h2 className="text-34 text-primary font-bold font-nonito">
+                    Forget Password
+                  </h2>
+                  <p className="text-sm text-red-700 font-medium mt-4">
+                    Enter your email for reset your password
+                  </p>
+
+
+                  <CssTextField
+                    id="outlined-basic"
+                    label="Email Address"
+                    variant="outlined"
+                    className="mt-4!"
+                    onChange={(e) => {
+                      setResetEmail(e.target.value); setResetEmailError("")}}
+                    />
+                    {resetemailerror && (
+                      <p className="bg-red-500 text-white rounded py-2 px-3 w-[70%] mt-2">
+                        {resetemailerror}
+                      </p>
+                    )}
+                  {/* button */}
+                  <div className="flex gap-2 mt-4">
+                    <button
+                      className="bg-primary text-xl text-white font-Opensans font-medium rounded-2xl py-1 px-3 cursor-pointer"
+                      onClick={() => setPopup(false)}
+                    >
+                      cancel
+                    </button>
+
+                    <button
+                      className="bg-primary text-xl text-white font-Opensans font-medium rounded-2xl py-1 px-3 cursor-pointer"
+                      onClick={submitResetEmail}
+                    >
+                      submit
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+
             {loader ? (
               <div className="ml-[144px]">
                 <LineWave

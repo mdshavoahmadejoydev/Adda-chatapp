@@ -13,7 +13,7 @@ import { ToastContainer, toast } from 'react-toastify';
 // react tostify;
 
 // firebase auth code:
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, sendEmailVerification} from "firebase/auth";
 // firebase auth code:
 
 // react loader
@@ -122,6 +122,8 @@ const Registration = () => {
         .then((userCredential) => {
 
           setLoader(false)
+          
+          sendEmailVerification(auth.currentUser);
           toast.success('registration successfully')
 
           setTimeout(() => {
