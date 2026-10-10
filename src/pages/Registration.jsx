@@ -240,7 +240,7 @@ const Registration = () => {
       </Grid>
       <Grid size={6}>
         <Image
-          classname={`w-full h-screen object-cover`}
+          className={`w-full h-screen object-cover`}
           src={regImage}
           alt={`reg img`}
         />

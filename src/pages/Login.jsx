@@ -135,7 +135,7 @@ const Login = () => {
               toast.success("login successfully")
   
               setInterval(() => {
-                navigate("/home")
+                navigate("/deshboard/home")
               }, 2000);
             } else {
               toast.error("Check your Email and verify")
@@ -336,7 +336,7 @@ const Login = () => {
       </Grid>
       <Grid size={6}>
         <Image
-          classname={`w-full h-screen object-cover`}
+          className={`w-full h-screen object-cover`}
           src={regImage}
           alt={`reg img`}
         />
