@@ -28,6 +28,7 @@ const Sideber = () => {
             <SideberMenu className={` after:top-[302px]  before:top-[302px]`} Path="/deshboard/notifications" ConditionPath="deshboard/notifications" Icon={IoIosNotificationsOutline} Color="deshboard/notifications"/>
 
             <SideberMenu className={` after:top-[373px]  before:top-[373px]`} Path="/deshboard/setting" ConditionPath="deshboard/setting" Icon={IoSettingsOutline} Color="deshboard/setting"/>
+            
           </div>
         </div>
         <RiLogoutBoxRLine className="text-white text-3xl" />

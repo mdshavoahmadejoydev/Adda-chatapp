@@ -188,7 +188,7 @@ const Login = () => {
 
     signInWithPopup(auth, provider)
       .then((result) => {
-          navigate("/home");
+          navigate("/deshboard/home");
       })
       .catch((error) => {
         const errorcode = error.code

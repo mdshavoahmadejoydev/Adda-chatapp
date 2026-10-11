@@ -5,7 +5,7 @@ import Grid from '@mui/material/Grid'
 
 const RootLayout = () => {
   return (
-    <Grid container spacing={2}>
+    <Grid container>
         <Grid size={2}>
           <Sideber/>
         </Grid>
