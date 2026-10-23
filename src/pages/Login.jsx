@@ -20,6 +20,8 @@ import { ToastContainer, toast } from 'react-toastify';
 
 // react loader
 import { Audio, LineWave } from 'react-loader-spinner'
+import { useDispatch } from "react-redux";
+import { activeuserinfo } from "../slices/activeUserSlice";
 // react loader
 
 const BootstrapButton = styled(Button)({
@@ -56,6 +58,8 @@ const Login = () => {
   // firebase auth code:
 
   const navigate = useNavigate();
+
+  const dispatch = useDispatch();
 
 
   const [email, setEmail] = useState("");
@@ -133,8 +137,10 @@ const Login = () => {
           .then((userCredential) => {
             if(userCredential.user.emailVerified) {
               toast.success("login successfully")
-  
-              setInterval(() => {
+              
+              dispatch(activeuserinfo(userCredential.user))
+
+              setTimeout(() => {
                 navigate("/deshboard/home")
               }, 2000);
             } else {

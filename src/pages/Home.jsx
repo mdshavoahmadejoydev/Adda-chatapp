@@ -6,7 +6,7 @@ import { LuSearch } from "react-icons/lu";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import PageTitle from '../components/PageTitle';
 import GroupItemsCard from '../components/GroupItemsCard';
-import UserCard from '../../Layouts/UserCard';
+import UserCard from '../Layouts/UserCard';
 
 const Home = () => {
   return (

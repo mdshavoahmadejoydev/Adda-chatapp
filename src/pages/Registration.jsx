@@ -8,6 +8,9 @@ import { styled } from '@mui/material/styles';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
+// real time database
+import { getDatabase, ref, set } from "firebase/database";
+
 // react tostify;
 import { ToastContainer, toast } from 'react-toastify';
 // react tostify;
@@ -52,6 +55,9 @@ const Registration = () => {
   // firebase auth code:
   const auth = getAuth();
   // firebase auth code:
+  // real time database :
+  const db = getDatabase();
+  // real time database :
 
   const navigate = useNavigate();
 
@@ -120,15 +126,23 @@ const Registration = () => {
       // firebase auth code:
       createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
-
-          setLoader(false)
           
           sendEmailVerification(auth.currentUser);
           toast.success('registration successfully')
 
+          // real time database
+          set(ref(db, 'aluser/'), {
+            name: name,
+            email: userCredential.user.email,
+            userid: userCredential.user.uid,
+          });
+          // real time database
+          
           setTimeout(() => {
             navigate("/login")
           }, 2000);
+          
+          setLoader(false)
         })
         .catch((error) => {
           const errorCode = error.code;

@@ -1,8 +1,8 @@
 import React from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { LuSearch } from "react-icons/lu";
-import PageTitle from "../src/components/PageTitle";
-import GroupItemsCard from "../src/components/GroupItemsCard";
+import PageTitle from "../components/PageTitle";
+import GroupItemsCard from "../components/GroupItemsCard";
 
 const UserCard = () => {
   return (

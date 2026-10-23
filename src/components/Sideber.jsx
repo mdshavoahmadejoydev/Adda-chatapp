@@ -8,8 +8,11 @@ import { IoChatbubbleEllipsesSharp } from "react-icons/io5";
 import { IoHomeOutline } from "react-icons/io5";
 import { Link, useLocation } from 'react-router-dom';
 import SideberMenu from './SideberMenu';
+import { useSelector } from 'react-redux';
 
 const Sideber = () => {
+
+  let data = useSelector(state => (state.activeuser.value))
 
   return (
     <div
@@ -18,16 +21,20 @@ const Sideber = () => {
     >
       <div className="flex flex-col items-center justify-between h-full">
         <div className="flex flex-col items-center">
-          <Image src={ProfilePick} className={`w-[100px]`} />
+          <div>
+            <Image src={ProfilePick} className={`w-[100px]`} />
+            <h2 className=' font-semibold'>shajib khan</h2>
+          </div>
+          
           <div className="mt-10 flex flex-col gap-10">
   
-            <SideberMenu className={` after:top-[163px]  before:top-[163px]`} Path="/deshboard/home" ConditionPath="deshboard/home" Icon={IoHomeOutline} Color="deshboard/home"/>
+            <SideberMenu className={` after:top-[185px]  before:top-[185px]`} Path="/deshboard/home" ConditionPath="deshboard/home" Icon={IoHomeOutline} Color="deshboard/home"/>
             
-            <SideberMenu className={` after:top-[233px]  before:top-[233px]`} Path="/deshboard/massage" ConditionPath="deshboard/massage" Icon={IoChatbubbleEllipsesSharp} Color="deshboard/massage"/>
+            <SideberMenu className={` after:top-[255px]  before:top-[255px]`} Path="/deshboard/massage" ConditionPath="deshboard/massage" Icon={IoChatbubbleEllipsesSharp} Color="deshboard/massage"/>
             
-            <SideberMenu className={` after:top-[302px]  before:top-[302px]`} Path="/deshboard/notifications" ConditionPath="deshboard/notifications" Icon={IoIosNotificationsOutline} Color="deshboard/notifications"/>
+            <SideberMenu className={` after:top-[324px]  before:top-[324px]`} Path="/deshboard/notifications" ConditionPath="deshboard/notifications" Icon={IoIosNotificationsOutline} Color="deshboard/notifications"/>
 
-            <SideberMenu className={` after:top-[373px]  before:top-[373px]`} Path="/deshboard/setting" ConditionPath="deshboard/setting" Icon={IoSettingsOutline} Color="deshboard/setting"/>
+            <SideberMenu className={` after:top-[395px]  before:top-[395px]`} Path="/deshboard/setting" ConditionPath="deshboard/setting" Icon={IoSettingsOutline} Color="deshboard/setting"/>
             
           </div>
         </div>

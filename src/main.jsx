@@ -4,8 +4,13 @@ import './index.css'
 import App from './App.jsx'
 import firebaseConfig from '../firebaseConfig.js'
 
+// for react redux setup start
+import { store } from '../store.js'
+import { Provider } from 'react-redux'
+// for react redux setup end
+
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
+  <Provider store={store}>
     <App />
-  </StrictMode>,
+  </Provider>,
 )

@@ -8,7 +8,7 @@ const SideberMenu = ({Path, ConditionPath, className, Icon, Color}) => {
 
   let location = useLocation();
   let active = (location.pathname.replace("/", ""));
-  console.log(active);
+  // console.log(active);
 
 
   return (
