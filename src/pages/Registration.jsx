@@ -9,7 +9,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 // real time database
-import { getDatabase, ref, set } from "firebase/database";
+import { getDatabase, push, ref, set } from "firebase/database";
 
 // react tostify;
 import { ToastContainer, toast } from 'react-toastify';
@@ -131,7 +131,7 @@ const Registration = () => {
           toast.success('registration successfully')
 
           // real time database
-          set(ref(db, 'aluser/'), {
+          set(push(ref(db, 'aluser/')), {
             name: name,
             email: userCredential.user.email,
             userid: userCredential.user.uid,
