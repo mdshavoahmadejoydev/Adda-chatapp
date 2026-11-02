@@ -139,10 +139,11 @@ const Login = () => {
               toast.success("login successfully")
               
               dispatch(activeuserinfo(userCredential.user))
+              localStorage.setItem("activeUser" , JSON.stringify(userCredential.user))
 
               setTimeout(() => {
                 navigate("/deshboard/home")
-              }, 2000);
+              }, 1000);
             } else {
               toast.error("Check your Email and verify")
             }

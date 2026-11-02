@@ -25,7 +25,7 @@ const UserCard = () => {
 
     });
   }, []);
-  console.log(allUsers)
+  // console.log(allUsers)
 
   return (
     <>

@@ -5,7 +5,7 @@ export const activeUserSlice = createSlice({
   
   name: 'active',
   initialState : {
-    value: null
+    value: localStorage.getItem("activeUser") ? JSON.parse(localStorage.getItem("activeUser")) : null
   },
 
   reducers: {

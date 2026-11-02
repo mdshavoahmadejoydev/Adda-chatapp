@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Sideber from "../components/Sideber";
 import Grid from "@mui/material/Grid";
 import { LuSearch } from "react-icons/lu";
@@ -6,11 +6,24 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import PageTitle from "../components/PageTitle";
 import GroupItemsCard from "../components/GroupItemsCard";
 import UserCard from "../Layouts/UserCard";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 
 
 const Home = () => {
   
+  // let navigate = useNavigate();
+  
+  // let data = useSelector(state => state.activeuser.value);
+  
+  // useEffect(()=> {
+  //   if(data == null) {
+  //     navigate("/login")
+  //   }
+  // }, [])
+
+  // ouporer function ta potata page er jonno define na kore ami dircet rootlayout a diye disi . tay all page a akbare hoye gese 
 
   return (
     <Grid
