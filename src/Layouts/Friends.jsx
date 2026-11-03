@@ -1,0 +1,86 @@
+import React, { useEffect, useState } from "react";
+import { BsThreeDotsVertical } from "react-icons/bs";
+import { LuSearch } from "react-icons/lu";
+import PageTitle from "../components/PageTitle";
+import GroupItemsCard from "../components/GroupItemsCard";
+
+// read operation from database
+
+
+const FriendList = () => {
+  // console.log(data);
+
+
+  // console.log(allUsers)
+
+  return (
+    <>
+      {/* input container start */}
+      <div className="flex items-center shrink-0 rounded-2xl shadow-[0px_2px_4px_1px_rgba(0,0,0,0.26)]">
+        <LuSearch className="text-black text-xl bg-white rounded-l-2xl py-3 px-3 box-content" />
+
+        <input
+          type="text"
+          placeholder="Search"
+          className="bg-white font-poppins font-medium text-[#3d3d3d] text-base py-[10px] pr-2 w-full min-w-0 border-none outline-none"
+        />
+
+        <BsThreeDotsVertical className="text-[#5F35F5] text-xl bg-white rounded-r-2xl py-[12px] px-3 box-content" />
+      </div>
+      {/* input container end */}
+
+      {/* Groups card start */}
+      <div className="w-full flex-1 min-h-0 bg-white mt-5 pb-2 rounded-2xl shadow-[0px_1px_4px_2px_rgba(0,0,0,0.26)] flex flex-col">
+        <div className="shrink-0">
+          <PageTitle Text={"Group Lists"} />
+        </div>
+
+        <div className="flex-1 min-h-0 overflow-y-auto">
+          <GroupItemsCard
+            src={""}
+            userName={`mds joy`}
+            des={`kjl lhli uyuy pipo jhkj`}
+            text="JOIN"
+          />
+          
+          <GroupItemsCard
+            src={""}
+            userName={`mds joy`}
+            des={`kjl lhli uyuy pipo jhkj`}
+            text="JOIN"
+          />
+          
+          <GroupItemsCard
+            src={""}
+            userName={`mds joy`}
+            des={`kjl lhli uyuy pipo jhkj`}
+            text="JOIN"
+          />
+          
+          <GroupItemsCard
+            src={""}
+            userName={`mds joy`}
+            des={`kjl lhli uyuy pipo jhkj`}
+            text="JOIN"
+          />
+          
+          <GroupItemsCard
+            src={""}
+            userName={`mds joy`}
+            des={`kjl lhli uyuy pipo jhkj`}
+            text="JOIN"
+          />
+          
+          <GroupItemsCard
+            src={""}
+            userName={`mds joy`}
+            des={`kjl lhli uyuy pipo jhkj`}
+            text="JOIN"
+          />
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default FriendList;

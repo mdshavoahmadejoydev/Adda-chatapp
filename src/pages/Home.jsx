@@ -5,9 +5,14 @@ import { LuSearch } from "react-icons/lu";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import PageTitle from "../components/PageTitle";
 import GroupItemsCard from "../components/GroupItemsCard";
-import UserCard from "../Layouts/UserCard";
+import UserList from "../Layouts/UserList";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import FriendRequest from "../Layouts/FriendRequest"
+import GroupList from "../Layouts/GroupList";
+import FriendList from "../Layouts/Friends";
+import MyGroup from "../Layouts/MyGroup";
+import BlockList from "../Layouts/BlockList";
 
 
 
@@ -36,7 +41,7 @@ const Home = () => {
         size={4}
         className="h-[44.5vh] rounded-2xl px-1 flex flex-col min-h-0"
       >
-        {/* <UserCard /> */}
+        <GroupList/>
       </Grid>
       {/* Group list end */}
 
@@ -45,7 +50,7 @@ const Home = () => {
         size={4}
         className="h-[44.5vh] rounded-2xl px-1 flex flex-col min-h-0"
       >
-        {/* <UserCard /> */}
+        <FriendList/>
       </Grid>
       {/* Friends list end */}
 
@@ -54,7 +59,7 @@ const Home = () => {
         size={4}
         className="h-[44.5vh] rounded-2xl px-1 flex flex-col min-h-0"
       >
-        <UserCard />
+        <UserList />
       </Grid>
       {/* Third column end */}
 
@@ -62,21 +67,21 @@ const Home = () => {
         size={4}
         className="h-[44.5vh] rounded-2xl px-1 flex flex-col min-h-0"
       >
-        {/* <UserCard /> */}
+        <FriendRequest/>
       </Grid>
 
       <Grid
         size={4}
         className="h-[44.5vh] rounded-2xl px-1 flex flex-col min-h-0"
       >
-        {/* <UserCard /> */}
+        <MyGroup/>
       </Grid>
 
       <Grid
         size={4}
         className="h-[44.5vh] rounded-2xl px-1 flex flex-col min-h-0"
       >
-        {/* <UserCard /> */}
+        <BlockList/>
       </Grid>
     </Grid>
   );

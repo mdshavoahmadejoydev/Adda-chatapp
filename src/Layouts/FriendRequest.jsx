@@ -5,24 +5,27 @@ import PageTitle from "../components/PageTitle";
 import GroupItemsCard from "../components/GroupItemsCard";
 
 // read operation from database
-import { getDatabase, ref, onValue } from "firebase/database";
+import { getDatabase, ref, onValue, set, push } from "firebase/database";
+import { useSelector } from "react-redux";
 
-const UserCard = () => {
-
+const UserList = () => {
   const db = getDatabase();
-  const [allUsers, setAllUsers] = useState([])
+  const [friendRequestList, setFriendRequestList] = useState([]);
+  const data = useSelector((state) => state.activeuser.value);
+  // console.log(data);
+
+
 
   useEffect(() => {
-    const starCountRef = ref(db, "aluser");
+    const starCountRef = ref(db, "friendRequestList");
     onValue(starCountRef, (snapshot) => {
       // console.log(snapshot) object powa jay , jeta kno kaj a ase na . tay ata ke array a convert korer jonno....
-      let arr = []
-      snapshot.forEach(item => {
-        arr.push(item.val())
-      }) 
-      // console.log(arr) array powa jay but array amr akne lagbe na . ata amr return er moddhe lagbe , {scope} er karone array ta akn theke ber hobe na . tay akn theke ber korer jonno amra oupore state nici (allUsers) , oi state theke amra return er vitore amader arr ar array(data) ta niye jabo 
-      setAllUsers(arr)
-
+      let arr = [];
+      snapshot.forEach((item) => {
+          arr.push(item.val());
+      });
+      // console.log(arr) array powa jay but array amr akne lagbe na . ata amr return er moddhe lagbe , {scope} er karone array ta akn theke ber hobe na . tay akn theke ber korer jonno amra oupore state nici (allUsers) , oi state theke amra return er vitore amader arr ar array(data) ta niye jabo
+      setFriendRequestList(arr);
     });
   }, []);
   // console.log(allUsers)
@@ -46,31 +49,22 @@ const UserCard = () => {
       {/* Groups card start */}
       <div className="w-full flex-1 min-h-0 bg-white mt-5 pb-2 rounded-2xl shadow-[0px_1px_4px_2px_rgba(0,0,0,0.26)] flex flex-col">
         <div className="shrink-0">
-          <PageTitle Text={"User List"} />
+          <PageTitle Text={"FriendList"} />
         </div>
 
         <div className="flex-1 min-h-0 overflow-y-auto">
-
-        {
-          allUsers.map(item => (
+          {friendRequestList.map((item) => (
             <GroupItemsCard
               src={""}
-              userName={item.name}
-              des={item.email}
-              text="JOIN"
+              userName={item.sendername}
+              des={`kjl lhli uyuy pipo jhkj`}
+              text="ACCEPT"             
             />
-            
-          ))
-        }
-
-
-          
-
-         
+          ))}
         </div>
       </div>
     </>
   );
 };
 
-export default UserCard;
+export default UserList;

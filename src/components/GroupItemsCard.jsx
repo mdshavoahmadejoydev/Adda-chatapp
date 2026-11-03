@@ -2,7 +2,7 @@ import React from 'react'
 import Image from './Image'
 import Button from './Button'
 
-const GroupItemsCard = ({src, userName, des, text}) => {
+const GroupItemsCard = ({src, userName, des, text, onClick}) => {
   return (
     <div className='flex justify-between items-center px-3 relative mb-8
     after:absolute after:-bottom-4 after:w-[93%] after:h-[1px] after:content-[""] after:bg-black/20
@@ -17,7 +17,7 @@ const GroupItemsCard = ({src, userName, des, text}) => {
 
         </div>
       </div>
-      <Button text={text}/>
+      <Button onClick={onClick} text={text}/>
     </div>
   )
 }

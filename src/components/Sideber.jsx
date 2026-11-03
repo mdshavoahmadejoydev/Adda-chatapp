@@ -15,7 +15,7 @@ import { getDatabase, ref, onValue } from "firebase/database";
 
 const Sideber = () => {
   let data = useSelector((state) => state.activeuser.value);
-  console.log(data.uid);
+  // console.log(data.uid);
 
   const db = getDatabase();
   const auth = getAuth();
@@ -50,7 +50,7 @@ const Sideber = () => {
       setAllUsers(arr);
     });
   }, []);
-  console.log(allUsers);
+  // console.log(allUsers);
 
   return (
     <div
@@ -68,7 +68,7 @@ const Sideber = () => {
 
           <div className="mt-10 flex flex-col gap-10">
             <SideberMenu
-              className={` after:top-[185px]  before:top-[185px]`}
+              className={` after:top-[198px]  before:top-[198px]`}
               Path="/deshboard/home"
               ConditionPath="deshboard/home"
               Icon={IoHomeOutline}
@@ -76,7 +76,7 @@ const Sideber = () => {
             />
 
             <SideberMenu
-              className={` after:top-[255px]  before:top-[255px]`}
+              className={` after:top-[268px]  before:top-[268px]`}
               Path="/deshboard/massage"
               ConditionPath="deshboard/massage"
               Icon={IoChatbubbleEllipsesSharp}
@@ -84,7 +84,7 @@ const Sideber = () => {
             />
 
             <SideberMenu
-              className={` after:top-[324px]  before:top-[324px]`}
+              className={` after:top-[337px]  before:top-[337px]`}
               Path="/deshboard/notifications"
               ConditionPath="deshboard/notifications"
               Icon={IoIosNotificationsOutline}
@@ -92,7 +92,7 @@ const Sideber = () => {
             />
 
             <SideberMenu
-              className={` after:top-[395px]  before:top-[395px]`}
+              className={` after:top-[408px]  before:top-[408px]`}
               Path="/deshboard/setting"
               ConditionPath="deshboard/setting"
               Icon={IoSettingsOutline}

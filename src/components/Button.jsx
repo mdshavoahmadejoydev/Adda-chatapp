@@ -1,8 +1,8 @@
 import React from 'react'
 
-const Button = ({text}) => {
+const Button = ({text, onClick}) => {
   return (
-    <button className='bg-blue-violet font-poppins font-semibold text-base px-4 text-white rounded-md cursor-pointer'>{text}</button>
+    <button onClick={onClick} className='bg-blue-violet font-poppins font-semibold text-base px-4 text-white rounded-md cursor-pointer'>{text}</button>
   )
 }
 
