@@ -15,7 +15,6 @@ const UserList = () => {
   // console.log(data);
 
   const handleAdd = (item) => {
-    console.log(item)
     set(push(ref(db, "friendRequestList/")), {
       senderid: data.uid,
       sendername: "joy",
@@ -69,8 +68,8 @@ const UserList = () => {
               src={""}
               userName={item.name}
               des={item.email}
-              text="JOIN"
-              onClick={() => handleAdd(item)}
+              secondBtntext="JOIN"
+              onClickForAdd={() => handleAdd(item)}
             />
           ))}
         </div>

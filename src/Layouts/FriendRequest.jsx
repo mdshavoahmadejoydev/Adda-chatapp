@@ -5,7 +5,7 @@ import PageTitle from "../components/PageTitle";
 import GroupItemsCard from "../components/GroupItemsCard";
 
 // read operation from database
-import { getDatabase, ref, onValue, set, push } from "firebase/database";
+import { getDatabase, ref, onValue, set, push, remove } from "firebase/database";
 import { useSelector } from "react-redux";
 
 const UserList = () => {
@@ -26,7 +26,7 @@ const UserList = () => {
         // console.log(item.val().senderid)
         // console.log(data.uid)
         if(data.uid == item.val().receiverid || data.uid == item.val().senderid) {
-          arr.push(item.val());
+          arr.push({...item.val(),id:item.key});
 
         }
       });
@@ -34,7 +34,12 @@ const UserList = () => {
       setFriendRequestList(arr);
     });
   }, []);
-  // console.log(allUsers)
+
+  // data removed
+  let handleRemoved = (item) => {
+    console.log(item.id)
+    remove(ref(db, 'friendRequestList/' + item.id))
+  }
 
   return (
     <>
@@ -69,7 +74,9 @@ const UserList = () => {
               src={""}
               userName={item.sendername}
               des={`kjl lhli uyuy pipo jhkj`}
-              text="ACCEPT"             
+              onclickForRemove={() => handleRemoved(item)}
+              firstBtnText="cancel"
+              secondBtntext="ACCEPT"             
             />)
           
           )}

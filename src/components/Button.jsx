@@ -1,9 +1,22 @@
-import React from 'react'
+import React from "react";
 
-const Button = ({text, onClick}) => {
+const Button = ({ firstBtnText, secondBtntext, onClickForAdd, onclickForRemove }) => {
   return (
-    <button onClick={onClick} className='bg-blue-violet font-poppins font-semibold text-base px-4 text-white rounded-md cursor-pointer'>{text}</button>
-  )
-}
+    <div>
+      <button
+        onClick={onclickForRemove}
+        className="bg-red-400 font-poppins font-semibold text-base px-4 text-white rounded-md cursor-pointer"
+      >
+        {firstBtnText}
+      </button>
+      <button
+        onClick={onClickForAdd}
+        className="bg-blue-violet ml-1 font-poppins font-semibold text-base px-4 text-white rounded-md cursor-pointer"
+      >
+        {secondBtntext}
+      </button>
+    </div>
+  );
+};
 
-export default Button
+export default Button;
