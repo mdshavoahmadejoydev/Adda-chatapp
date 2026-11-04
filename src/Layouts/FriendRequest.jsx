@@ -22,7 +22,13 @@ const UserList = () => {
       // console.log(snapshot) object powa jay , jeta kno kaj a ase na . tay ata ke array a convert korer jonno....
       let arr = [];
       snapshot.forEach((item) => {
+        // console.log(item.val().receiverid)
+        // console.log(item.val().senderid)
+        // console.log(data.uid)
+        if(data.uid == item.val().receiverid || data.uid == item.val().senderid) {
           arr.push(item.val());
+
+        }
       });
       // console.log(arr) array powa jay but array amr akne lagbe na . ata amr return er moddhe lagbe , {scope} er karone array ta akn theke ber hobe na . tay akn theke ber korer jonno amra oupore state nici (allUsers) , oi state theke amra return er vitore amader arr ar array(data) ta niye jabo
       setFriendRequestList(arr);
@@ -54,13 +60,19 @@ const UserList = () => {
 
         <div className="flex-1 min-h-0 overflow-y-auto">
           {friendRequestList.map((item) => (
+            data.uid == item.receiverid && 
+            // console.log(data.uid)
+            // console.log(item.senderid)
+
+
             <GroupItemsCard
               src={""}
               userName={item.sendername}
               des={`kjl lhli uyuy pipo jhkj`}
               text="ACCEPT"             
-            />
-          ))}
+            />)
+          
+          )}
         </div>
       </div>
     </>
