@@ -1,57 +1,60 @@
-import Grid from '@mui/material/Grid';
-import regImage from '../assets/reg.png'
-import Image from '../components/Image'
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
+import Grid from "@mui/material/Grid";
+import regImage from "../assets/reg.png";
+import Image from "../components/Image";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
 
-import { styled } from '@mui/material/styles';
-import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { styled } from "@mui/material/styles";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 // real time database
 import { getDatabase, push, ref, set } from "firebase/database";
 
 // react tostify;
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer, toast } from "react-toastify";
 // react tostify;
 
 // firebase auth code:
-import { getAuth, createUserWithEmailAndPassword, sendEmailVerification} from "firebase/auth";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+  updateProfile,
+} from "firebase/auth";
 // firebase auth code:
 
 // react loader
-import { Audio, LineWave } from 'react-loader-spinner'
+import { Audio, LineWave } from "react-loader-spinner";
 // react loader
 
 const BootstrapButton = styled(Button)({
-  background: '#5F35F5',
-  border: '1px solid',
-  padding: '6px 12px',
-  fontSize: '20px',
-  color: 'white',
-  borderRadius: '50px',
-  width: '70%',
-  marginTop: '51px',
-  marginBottom: '34px',
-  fontFamily: 'Open Sans',
-  boxShadow: 'none',
-  '&:hover': {
-    shadow: 'none'
-  }
+  background: "#5F35F5",
+  border: "1px solid",
+  padding: "6px 12px",
+  fontSize: "20px",
+  color: "white",
+  borderRadius: "50px",
+  width: "70%",
+  marginTop: "51px",
+  marginBottom: "34px",
+  fontFamily: "Open Sans",
+  boxShadow: "none",
+  "&:hover": {
+    shadow: "none",
+  },
 });
-
 
 const CssTextField = styled(TextField)({
-  width: '70%',
-  marginTop: '51px'
+  width: "70%",
+  marginTop: "51px",
 });
 const CssTextFieldtwothree = styled(TextField)({
-  width: '70%',
-  marginTop: '33px'
+  width: "70%",
+  marginTop: "33px",
 });
 
 const Registration = () => {
-
   // firebase auth code:
   const auth = getAuth();
   // firebase auth code:
@@ -69,7 +72,7 @@ const Registration = () => {
   const [nameerror, setNameerror] = useState("");
   const [passworderror, setPasswordError] = useState("");
 
-  const [loader, setLoader] = useState(false)
+  const [loader, setLoader] = useState(false);
 
   let emailregex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   // let passwordregex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@.#$!%*?&])[A-Za-z\d@.#$!%*?&]{8,15}$/;
@@ -79,84 +82,93 @@ const Registration = () => {
   let special_character = /(?=.*[@$!%*?&])/;
   let length_character = /[A-Za-z\d@$!%*?&]{8,}$/;
 
-
-
   let handleEmail = (e) => {
-    setEmail(e.target.value)
-    setEmailError("")
-  }
+    setEmail(e.target.value);
+    setEmailError("");
+  };
   let handleFullName = (e) => {
-    setName(e.target.value)
-    setNameerror("")
-  }
+    setName(e.target.value);
+    setNameerror("");
+  };
   let handlePassword = (e) => {
-    setPassword(e.target.value)
-    setPasswordError("")
-  }
-
+    setPassword(e.target.value);
+    setPasswordError("");
+  };
 
   let handleSignUp = () => {
-    if(!email) {
+    if (!email) {
       setEmailError("Enter your email");
     } else if (!emailregex.test(email)) {
       setEmailError("Enter valid email");
     }
     if (!name) {
-      setNameerror("Enter your Full Name")
+      setNameerror("Enter your Full Name");
     }
     if (!password) {
-      setPasswordError("Enter your Password")
-    } else if(!lowercase_letter.test(password)) {
+      setPasswordError("Enter your Password");
+    } else if (!lowercase_letter.test(password)) {
       // setPasswordError("Enter your strong Password like- abDFG68@")
-      setPasswordError("Enter lowercase letter")
-    } else if(!uppercase_letter.test(password)) {
-      setPasswordError("Enter uppercase letter")
-    } else if(!digit.test(password)) {
-      setPasswordError("Enter number digit")
-    }
-      else if(!special_character.test(password)) {
-      setPasswordError("Enter special character")
-    }
-      else if(!length_character.test(password)) {
-      setPasswordError("Enter 8.. character")
+      setPasswordError("Enter lowercase letter");
+    } else if (!uppercase_letter.test(password)) {
+      setPasswordError("Enter uppercase letter");
+    } else if (!digit.test(password)) {
+      setPasswordError("Enter number digit");
+    } else if (!special_character.test(password)) {
+      setPasswordError("Enter special character");
+    } else if (!length_character.test(password)) {
+      setPasswordError("Enter 8.. character");
     }
 
-    if (email && emailregex.test(email) && name && password && lowercase_letter.test(password) && uppercase_letter.test(password) && digit.test(password) && special_character.test(password) && length_character.test(password)) {
+    if (
+      email &&
+      emailregex.test(email) &&
+      name &&
+      password &&
+      lowercase_letter.test(password) &&
+      uppercase_letter.test(password) &&
+      digit.test(password) &&
+      special_character.test(password) &&
+      length_character.test(password)
+    ) {
       setLoader(true);
       // firebase auth code:
       createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
-          
           sendEmailVerification(auth.currentUser);
-          toast.success('registration successfully')
+          toast.success("registration successfully");
 
-          // real time database
-          set(push(ref(db, 'aluser/')), {
-            name: name,
-            email: userCredential.user.email,
-            userid: userCredential.user.uid,
+          // ubdate userCredential / profile
+          updateProfile(auth.currentUser, {
+            displayName: name,
+            photoURL: "https://i.ibb.co.com/WvpQJHv3/joy-for-fiverr-2.png",
+          }).then(() => {
+            // real time database
+            set(push(ref(db, "aluser/")), {
+              name: name,
+              email: userCredential.user.email,
+              userid: userCredential.user.uid,
+            });
+            // real time database
           });
-          // real time database
-          
+
+
           setTimeout(() => {
-            navigate("/login")
+            navigate("/login");
           }, 2000);
-          
-          setLoader(false)
+
+          setLoader(false);
         })
         .catch((error) => {
           const errorCode = error.code;
           console.log(errorCode);
-          if(errorCode.includes("auth/email-already-in-use")) {
-            setEmailError("Email has already use")
+          if (errorCode.includes("auth/email-already-in-use")) {
+            setEmailError("Email has already use");
           }
-          setLoader(false)
- 
+          setLoader(false);
         });
       // firebase auth code:
     }
-  }
-
+  };
 
   return (
     <Grid container>

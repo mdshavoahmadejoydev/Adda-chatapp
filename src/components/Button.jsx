@@ -10,9 +10,9 @@ const Button = ({ firstBtnText, secondBtntext, onClickForAdd, onclickForRemove }
         {firstBtnText}
       </button>
       <button
+        disabled={secondBtntext === "Pending"}
         onClick={onClickForAdd}
-        className="bg-blue-violet ml-1 font-poppins font-semibold text-base px-4 text-white rounded-md cursor-pointer"
-      >
+        className={`bg-blue-violet ml-1 font-poppins font-semibold text-base px-4 text-white rounded-md cursor-pointer  `}    >
         {secondBtntext}
       </button>
     </div>

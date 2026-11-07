@@ -12,12 +12,13 @@ const UserList = () => {
   const db = getDatabase();
   const [allUsers, setAllUsers] = useState([]);
   const data = useSelector((state) => state.activeuser.value);
-  // console.log(data);
+  console.log(data);
 
   const handleAdd = (item) => {
     set(push(ref(db, "friendRequestList/")), {
       senderid: data.uid,
-      sendername: "joy",
+      sendername: data.displayName
+,
 
       receiverid: item.userid,
       receivername: item.name,
@@ -39,6 +40,19 @@ const UserList = () => {
     });
   }, []);
   // console.log(allUsers)
+
+  // Friend request list all list read operation
+  const [concatFriendRequestList, setConcatFriendRequestList] = useState([]);
+  useEffect(() => {
+    const starCountRef = ref(db, "friendRequestList");
+    onValue(starCountRef, (snapshot) => {
+      let arr = [];
+      snapshot.forEach((item) => {
+        arr.push(item.val().senderid + item.val().receiverid);
+      });
+      setConcatFriendRequestList(arr);
+    });
+  }, []);
 
   return (
     <>
@@ -64,11 +78,18 @@ const UserList = () => {
 
         <div className="flex-1 min-h-0 overflow-y-auto">
           {allUsers.map((item) => (
+            // console.log(item.userid)
+            // console.log(data.uid)
             <GroupItemsCard
               src={""}
               userName={item.name}
               des={item.email}
-              secondBtntext="JOIN"
+              secondBtntext={
+                concatFriendRequestList.includes(item.userid + data.uid) ||
+                concatFriendRequestList.includes(data.uid + item.userid)
+                  ? "Pending"
+                  : "Add"
+              }
               onClickForAdd={() => handleAdd(item)}
             />
           ))}
