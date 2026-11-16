@@ -17,11 +17,12 @@ const UserList = () => {
   const handleAdd = (item) => {
     set(push(ref(db, "friendRequestList/")), {
       senderid: data.uid,
-      sendername: data.displayName
-,
+      sendername: data.displayName,
+      senderphoto: data.photoURL,
 
       receiverid: item.userid,
       receivername: item.name,
+      receiverphoto: item.profile,
     });
   };
 

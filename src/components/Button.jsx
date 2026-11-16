@@ -1,6 +1,12 @@
 import React from "react";
 
-const Button = ({ firstBtnText, secondBtntext, onClickForAdd, onclickForRemove }) => {
+const Button = ({
+  firstBtnText,
+  secondBtntext,
+  onClickForAdd,
+  onclickForRemove,
+  onClickforAccept,
+}) => {
   return (
     <div>
       <button
@@ -11,8 +17,15 @@ const Button = ({ firstBtnText, secondBtntext, onClickForAdd, onclickForRemove }
       </button>
       <button
         disabled={secondBtntext === "Pending"}
-        onClick={onClickForAdd}
-        className={`bg-blue-violet ml-1 font-poppins font-semibold text-base px-4 text-white rounded-md cursor-pointer  `}    >
+        onClick={() => {
+          if (secondBtntext === "Add") {
+            onClickForAdd();
+          } else if (secondBtntext === "Accept") {
+            onClickforAccept();
+          }
+        }}
+        className={`bg-blue-violet ml-1 font-poppins font-semibold text-base px-4 text-white rounded-md cursor-pointer  `}
+      >
         {secondBtntext}
       </button>
     </div>

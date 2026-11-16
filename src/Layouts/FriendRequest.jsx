@@ -5,7 +5,14 @@ import PageTitle from "../components/PageTitle";
 import GroupItemsCard from "../components/GroupItemsCard";
 
 // read operation from database
-import { getDatabase, ref, onValue, set, push, remove } from "firebase/database";
+import {
+  getDatabase,
+  ref,
+  onValue,
+  set,
+  push,
+  remove,
+} from "firebase/database";
 import { useSelector } from "react-redux";
 
 const UserList = () => {
@@ -13,8 +20,6 @@ const UserList = () => {
   const [friendRequestList, setFriendRequestList] = useState([]);
   const data = useSelector((state) => state.activeuser.value);
   // console.log(data);
-
-
 
   useEffect(() => {
     const starCountRef = ref(db, "friendRequestList");
@@ -25,9 +30,11 @@ const UserList = () => {
         // console.log(item.val().receiverid)
         // console.log(item.val().senderid)
         // console.log(data.uid)
-        if(data.uid == item.val().receiverid || data.uid == item.val().senderid) {
-          arr.push({...item.val(),id:item.key});
-
+        if (
+          data.uid == item.val().receiverid ||
+          data.uid == item.val().senderid
+        ) {
+          arr.push({ ...item.val(), id: item.key });
         }
       });
       // console.log(arr) array powa jay but array amr akne lagbe na . ata amr return er moddhe lagbe , {scope} er karone array ta akn theke ber hobe na . tay akn theke ber korer jonno amra oupore state nici (allUsers) , oi state theke amra return er vitore amader arr ar array(data) ta niye jabo
@@ -37,9 +44,27 @@ const UserList = () => {
 
   // data removed
   let handleRemoved = (item) => {
-    console.log(item.id)
-    remove(ref(db, 'friendRequestList/' + item.id))
-  }
+    console.log(item.id);
+    remove(ref(db, "friendRequestList/" + item.id));
+  };
+
+  // request accept
+  let handlaAccept = (item) => {
+    // console.log(item)
+    set(push(ref(db, "friends/")), {
+
+      ...item
+      // senderid: data.uid,
+      // sendername: data.displayName,
+      // senderphoto: data.photoURL,
+
+      // receiverid: item.userid,
+      // receivername: item.name,
+      // receiverphoto: item.profile,
+    }).then(() => {
+      remove(ref(db, "friendRequestList/" + item.id));
+    });
+  };
 
   return (
     <>
@@ -64,21 +89,22 @@ const UserList = () => {
         </div>
 
         <div className="flex-1 min-h-0 overflow-y-auto">
-          {friendRequestList.map((item) => (
-            data.uid == item.receiverid && 
-            // console.log(data.uid)
-            // console.log(item.senderid)
+          {friendRequestList.map(
+            (item) =>
+              data.uid == item.receiverid && (
+                // console.log(data.uid)
+                // console.log(item.senderid)
 
-
-            <GroupItemsCard
-              src={""}
-              userName={item.sendername}
-              des={`kjl lhli uyuy pipo jhkj`}
-              onclickForRemove={() => handleRemoved(item)}
-              firstBtnText="cancel"
-              secondBtntext="ACCEPT"             
-            />)
-          
+                <GroupItemsCard
+                  src={item.senderphoto}
+                  userName={item.sendername}
+                  des={`kjl lhli uyuy pipo jhkj`}
+                  onclickForRemove={() => handleRemoved(item)}
+                  onClickforAccept={() => handlaAccept(item)}
+                  firstBtnText="Cancel"
+                  secondBtntext="Accept"
+                />
+              ),
           )}
         </div>
       </div>
