@@ -9,7 +9,7 @@ const GroupItemsCard = ({src, userName, des, secondBtntext, firstBtnText, onClic
     '>
       <div className='flex gap-4 items-center'>
         <div className='w-[50px] h-[50px] bg-black/60 rounded-full'>
-          <Image src={src}/>
+          <Image src={src} className={`w-full h-full rounded-full object-cover object-center`}/>
         </div>
         <div>
           <p className='font-poppins font-bold text-black text-base'>{userName}</p>

@@ -12,7 +12,7 @@ const UserList = () => {
   const db = getDatabase();
   const [allUsers, setAllUsers] = useState([]);
   const data = useSelector((state) => state.activeuser.value);
-  console.log(data);
+  // console.log(data);
 
   const handleAdd = (item) => {
     set(push(ref(db, "friendRequestList/")), {
@@ -81,7 +81,7 @@ const UserList = () => {
             // console.log(item.userid)
             // console.log(data.uid)
             <GroupItemsCard
-              src={""}
+              src={item.profile}
               userName={item.name}
               des={item.email}
               secondBtntext={

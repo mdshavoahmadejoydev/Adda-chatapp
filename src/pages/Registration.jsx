@@ -146,6 +146,7 @@ const Registration = () => {
             set(push(ref(db, "aluser/")), {
               name: name,
               email: userCredential.user.email,
+              profile: userCredential.user.photoURL,
               userid: userCredential.user.uid,
             });
             // real time database

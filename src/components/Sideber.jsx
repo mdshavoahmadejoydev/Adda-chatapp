@@ -36,20 +36,22 @@ const Sideber = () => {
   };
 
   // for profile name read operation
-  const [allUsers, setAllUsers] = useState([]);
-  useEffect(() => {
-    const alluserRef = ref(db, "aluser/");
-    onValue(alluserRef, (snapshot) => {
-      let arr = [];
-      snapshot.forEach((item) => {
-        if(data.uid == item.val().userid) {
 
-          arr.push(item.val());
-        }
-      });
-      setAllUsers(arr);
-    });
-  }, []);
+  // const [allUsers, setAllUsers] = useState([]);
+  // useEffect(() => {
+  //   const alluserRef = ref(db, "aluser/");
+  //   onValue(alluserRef, (snapshot) => {
+  //     let arr = [];
+  //     snapshot.forEach((item) => {
+  //       if(data.uid == item.val().userid) {
+
+  //         arr.push(item.val());
+  //       }
+  //     });
+  //     setAllUsers(arr);
+  //   });
+  // }, []);
+
   // console.log(allUsers);
 
   return (
@@ -59,12 +61,12 @@ const Sideber = () => {
     >
       <div className="flex flex-col items-center justify-between h-full">
         <div className="flex flex-col items-center">
-          {allUsers.map((item) => (
-            <div>
-              <Image src={ProfilePick} className={`w-[100px]`} />
-              <h2 className=" text-white text-center mt-2 text-xl font-poppins font-semibold">{item.name}</h2>
-            </div>
-          ))}
+          <div>
+            <Image src={data.photoURL} className={`w-[100px] rounded-full`} />
+            <h2 className=" text-white text-center mt-2 text-xl font-poppins font-semibold">
+              {data.displayName}
+            </h2>
+          </div>
 
           <div className="mt-10 flex flex-col gap-10">
             <SideberMenu
